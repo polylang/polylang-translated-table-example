@@ -76,7 +76,7 @@ class EventsTable extends \WP_List_Table {
 
 		$items = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT * $query ORDER BY `date_start` DESC LIMIT %d OFFSET %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, no other way than ignore this.
+				"SELECT * $query ORDER BY `id` DESC LIMIT %d OFFSET %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, no other way than ignore this.
 				$per_page,
 				( $this->get_pagenum() - 1 ) * $per_page
 			),

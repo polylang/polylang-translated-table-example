@@ -18,7 +18,7 @@ Or,
 
 ## How to use this plugin
 
-Once the plugin activated, you will get a "Events" entry at the bottom of the admin menu. Going there will display an empty list of events and a button to create an event. This button will create a random event (randomized title, date, duration, type, etc). Those events are sorted by starting date in the list. Events cannot be edited, but can be deleted.
+Once the plugin activated, you will get a "Events" entry at the bottom of the admin menu. Going there will display an empty list of events and a button to create an event. This button will create a random event (randomized title, date, duration, type, etc). Events cannot be edited, but can be deleted.
 
 Once Polylang 3.4 is activated, several language columns will appear in the list, allowing you to see the language assigned to the event, and giving you the ability to create translations.
 If you created events before activating Polylang, you can assign a language to all of them in one click by going to a Polylang's settings page (you will see an admin notice).
