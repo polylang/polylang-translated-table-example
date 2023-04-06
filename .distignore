@@ -1,0 +1,11 @@
+# Files to exclude from the distribution
+
+.vscode/
+
+.DS_Store
+composer.json
+composer.lock
+phpcs.xml.dist
+phpstan.neon.dist
+readme.md
+Thumbs.db
