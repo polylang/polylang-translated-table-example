@@ -1,0 +1,8 @@
+# Directories
+/.vscode
+/vendor
+
+# Files
+.DS_Store
+composer.lock
+Thumbs.db
