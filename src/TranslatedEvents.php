@@ -11,6 +11,8 @@ defined( 'ABSPATH' ) || exit;
  * Events language model.
  *
  * @since 1.0
+ *
+ * @phpstan-import-type DBInfoWithType from \PLL_Translatable_Object_With_Types_Interface
  */
 class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatable_Object_With_Types_Interface {
 
@@ -62,12 +64,11 @@ class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatab
 	 */
 	public function __construct( \PLL_Model $model ) {
 		$this->cache_type = Query::CACHE_GROUP;
-		$this->db         = [
-			'table'         => Table::get_table_name(),
-			'id_column'     => 'id',
-			'type_column'   => 'type',
-			'default_alias' => Table::get_table_name(),
-		];
+
+		if ( property_exists( $this, 'db' ) ) {
+			// Backward compatibility with Polylang < 3.4.3.
+			$this->db = $this->get_db_infos();
+		}
 
 		parent::__construct( $model );
 	}
@@ -156,6 +157,10 @@ class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatab
 		}
 
 		$lang = ! empty( PLL()->pref_lang ) ? PLL()->pref_lang : $this->model->get_default_language();
+
+		if ( empty( $lang ) ) {
+			return $args;
+		}
 
 		$args['lang'] = $lang->slug;
 		return $args;
@@ -397,6 +402,31 @@ class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatab
 		);
 
 		Tools::redirect();
+	}
+
+	/**
+	 * Returns database-related informations that can be used in some of this class methods.
+	 * These are specific to the table containing the objects.
+	 *
+	 * @see PLL_Translatable_Object::join_clause()
+	 * @see PLL_Translatable_Object::get_objects_with_no_lang_sql()
+	 *
+	 * @since 1.1
+	 *
+	 * @return string[] {
+	 *     @type string $table         Name of the table.
+	 *     @type string $id_column     Name of the column containing the object's ID.
+	 *     @type string $default_alias Default alias corresponding to the object's table.
+	 * }
+	 * @phpstan-return DBInfoWithType
+	 */
+	protected function get_db_infos() {
+		return [
+			'table'         => Table::get_table_name(),
+			'id_column'     => 'id',
+			'type_column'   => 'type',
+			'default_alias' => Table::get_table_name(),
+		];
 	}
 
 	/**
