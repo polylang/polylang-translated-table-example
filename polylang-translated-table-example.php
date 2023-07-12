@@ -10,7 +10,7 @@
  * Plugin Name:       Polylang translated table example
  * Plugin URI:        https://polylang.pro
  * Description:       Example plugin that creates translated a custom DB table.
- * Version:           1.0
+ * Version:           1.1
  * Requires at least: 5.8
  * Requires PHP:      5.6
  * Author:            WP SYNTEX
