@@ -65,11 +65,6 @@ class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatab
 	public function __construct( \PLL_Model $model ) {
 		$this->cache_type = Query::CACHE_GROUP;
 
-		if ( property_exists( $this, 'db' ) ) {
-			// Backward compatibility with Polylang < 3.4.3.
-			$this->db = $this->get_db_infos();
-		}
-
 		parent::__construct( $model );
 	}
 
