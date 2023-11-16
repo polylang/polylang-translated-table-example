@@ -9,8 +9,8 @@
  * @wordpress-plugin
  * Plugin Name:       Polylang translated table example
  * Plugin URI:        https://polylang.pro
- * Description:       Example plugin that creates translated a custom DB table.
- * Version:           1.0
+ * Description:       Example plugin that creates translated a custom DB table. Requires Polylang 3.4.3.
+ * Version:           1.1
  * Requires at least: 5.8
  * Requires PHP:      5.6
  * Author:            WP SYNTEX
@@ -52,6 +52,11 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 add_action(
 	'pll_model_init',
 	function ( $model ) {
+		if ( version_compare( POLYLANG_VERSION, '3.4.3', '<' ) ) {
+			// Polylang 3.4.3 is required.
+			return;
+		}
+
 		// Register the DB table in Polylang.
 		$translatedEvents = ( new TranslatedEvents( $model ) )->init();
 		$model->translatable_objects->register( $translatedEvents );
