@@ -103,7 +103,7 @@ class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatab
 	 * @phpstan-return array<non-empty-string, non-empty-string>
 	 */
 	public function get_translated_object_types( $filter = true ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		$types = $this->model->cache->get( 'plltte_types' );
+		$types = PLL()->model->cache->get( 'plltte_types' );
 
 		if ( is_array( $types ) ) {
 			/** @var array<non-empty-string, non-empty-string> $types */
@@ -129,7 +129,7 @@ class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatab
 		$types = array_combine( $types, $types );
 
 		if ( did_action( 'after_setup_theme' ) ) {
-			$this->model->cache->set( 'plltte_types', $types );
+			PLL()->model->cache->set( 'plltte_types', $types );
 		}
 
 		/** @var array<non-empty-string, non-empty-string> $types */
@@ -151,7 +151,7 @@ class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatab
 			return $args;
 		}
 
-		$lang = ! empty( PLL()->pref_lang ) ? PLL()->pref_lang : $this->model->get_default_language();
+		$lang = ! empty( PLL()->pref_lang ) ? PLL()->pref_lang : PLL()->model->get_default_language();
 
 		if ( empty( $lang ) ) {
 			return $args;
@@ -220,7 +220,7 @@ class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatab
 	 * @return string[] Modified list of columns.
 	 */
 	public function add_lang_columns( $columns ) {
-		foreach ( $this->model->get_languages_list() as $language ) {
+		foreach ( PLL()->model->get_languages_list() as $language ) {
 			$columns[ "language_{$language->slug}" ] = sprintf(
 				'%s<span class="screen-reader-text">%s</span>',
 				$this->get_flag_html( $language ),
@@ -246,7 +246,7 @@ class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatab
 			return;
 		}
 
-		$langs = $this->model->get_languages_list( [ 'fields' => 'slug' ] );
+		$langs = PLL()->model->get_languages_list( [ 'fields' => 'slug' ] );
 
 		if ( ! in_array( $matches['lang'], $langs, true ) ) {
 			return;
@@ -258,7 +258,7 @@ class TranslatedEvents extends \PLL_Translated_Object implements \PLL_Translatab
 			return;
 		}
 
-		$col_lang = $this->model->get_language( $matches['lang'] );
+		$col_lang = PLL()->model->get_language( $matches['lang'] );
 
 		if ( empty( $col_lang ) ) {
 			return;
